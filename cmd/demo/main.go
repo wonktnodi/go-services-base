@@ -2,13 +2,13 @@ package main
 
 import (
   "fmt"
-  demoConfig "go-services-base/internal/config"
-  "go-services-base/internal/routers"
+  demoConfig "github.com/wonktnodi/go-services-base/internal/config"
+  "github.com/wonktnodi/go-services-base/internal/routers"
   
-  "go-services-base/internal/models"
-  "go-services-base/pkg/config"
-  "go-services-base/pkg/logging"
-  "go-services-base/pkg/utils"
+  "github.com/wonktnodi/go-services-base/internal/models"
+  "github.com/wonktnodi/go-services-base/pkg/config"
+  "github.com/wonktnodi/go-services-base/pkg/logging"
+  "github.com/wonktnodi/go-services-base/pkg/utils"
 )
 
 func main() {

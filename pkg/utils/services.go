@@ -4,8 +4,8 @@ import (
   "fmt"
   "github.com/gin-gonic/gin"
   "net/http"
-  "go-services-base/pkg/config"
-  "go-services-base/pkg/logging"
+  "github.com/wonktnodi/go-services-base/pkg/config"
+  "github.com/wonktnodi/go-services-base/pkg/logging"
   "time"
 )
 

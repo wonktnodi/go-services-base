@@ -2,8 +2,8 @@ package middleware
 
 import (
   "github.com/gin-gonic/gin"
-  "go-services-base/pkg/logging"
-  "go-services-base/pkg/restful"
+  "github.com/wonktnodi/go-services-base/pkg/logging"
+  "github.com/wonktnodi/go-services-base/pkg/restful"
 )
 
 func Authorization() gin.HandlerFunc {

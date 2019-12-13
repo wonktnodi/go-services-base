@@ -4,8 +4,8 @@ import (
   "crypto"
   "fmt"
   "reflect"
-  "go-services-base/pkg/persistence/codec"
-  "go-services-base/pkg/persistence/store"
+  "github.com/wonktnodi/go-services-base/pkg/persistence/codec"
+  "github.com/wonktnodi/go-services-base/pkg/persistence/store"
   "strings"
 )
 

@@ -1,8 +1,8 @@
 package cache
 
 import (
-  "go-services-base/pkg/persistence/codec"
-  "go-services-base/pkg/persistence/store"
+  "github.com/wonktnodi/go-services-base/pkg/persistence/codec"
+  "github.com/wonktnodi/go-services-base/pkg/persistence/store"
 )
 
 // CacheInterface represents the interface for all caches (aggregates, metric, memory, redis, ...)

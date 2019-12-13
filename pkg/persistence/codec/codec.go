@@ -1,7 +1,7 @@
 package codec
 
 import (
-  "go-services-base/pkg/persistence/store"
+  "github.com/wonktnodi/go-services-base/pkg/persistence/store"
 )
 
 // Stats allows to returns some statistics of codec usage

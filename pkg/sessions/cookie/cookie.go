@@ -2,7 +2,7 @@ package cookie
 
 import (
   gsessions "github.com/gorilla/sessions"
-  "go-services-base/pkg/sessions"
+  "github.com/wonktnodi/go-services-base/pkg/sessions"
 )
 
 type Store interface {

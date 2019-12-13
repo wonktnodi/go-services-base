@@ -1,6 +1,6 @@
 package metrics
 
-import "go-services-base/pkg/persistence/codec"
+import "github.com/wonktnodi/go-services-base/pkg/persistence/codec"
 
 // MetricsInterface represents the metrics interface for all available providers
 type Interface interface {

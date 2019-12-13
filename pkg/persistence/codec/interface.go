@@ -1,7 +1,7 @@
 package codec
 
 import (
-  "go-services-base/pkg/persistence/store"
+  "github.com/wonktnodi/go-services-base/pkg/persistence/store"
 )
 
 // CodecInterface represents an instance of a cache codec

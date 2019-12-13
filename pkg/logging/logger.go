@@ -2,7 +2,7 @@ package logging
 
 import (
   "github.com/wonktnodi/go-utils/log"
-  "go-services-base/pkg/debug"
+  "github.com/wonktnodi/go-services-base/pkg/debug"
 )
 
 type Log struct {

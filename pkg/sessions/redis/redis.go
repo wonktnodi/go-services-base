@@ -2,7 +2,7 @@ package redis
 
 import (
   "errors"
-  "go-services-base/pkg/sessions"
+  "github.com/wonktnodi/go-services-base/pkg/sessions"
   
   "github.com/boj/redistore"
   "github.com/gomodule/redigo/redis"

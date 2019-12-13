@@ -1,4 +1,4 @@
-module go-services-base
+module github.com/wonktnodi/go-services-base
 
 go 1.13
 

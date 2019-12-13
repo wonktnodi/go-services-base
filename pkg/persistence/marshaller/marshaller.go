@@ -2,8 +2,8 @@ package marshaller
 
 import (
   "github.com/vmihailenco/msgpack"
-  "go-services-base/pkg/persistence/cache"
-  "go-services-base/pkg/persistence/store"
+  "github.com/wonktnodi/go-services-base/pkg/persistence/cache"
+  "github.com/wonktnodi/go-services-base/pkg/persistence/store"
 )
 
 // Marshaller is the struct that marshal and unmarshal cache values

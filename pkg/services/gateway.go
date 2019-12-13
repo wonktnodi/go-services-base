@@ -1,8 +1,8 @@
 package services
 
 import (
-  "go-services-base/pkg/logging"
-  "go-services-base/pkg/router"
+  "github.com/wonktnodi/go-services-base/pkg/logging"
+  "github.com/wonktnodi/go-services-base/pkg/router"
 )
 
 var apiEndpoints *router.Endpoints = nil

@@ -3,8 +3,8 @@ package devops
 import (
   "github.com/gin-gonic/gin"
   "net/http"
-  "go-services-base/internal/models"
-  "go-services-base/pkg/persistence"
+  "github.com/wonktnodi/go-services-base/internal/models"
+  "github.com/wonktnodi/go-services-base/pkg/persistence"
 )
 
 func CacheClear() {

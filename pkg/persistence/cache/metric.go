@@ -1,8 +1,8 @@
 package cache
 
 import (
-  "go-services-base/pkg/persistence/metrics"
-  "go-services-base/pkg/persistence/store"
+  "github.com/wonktnodi/go-services-base/pkg/persistence/metrics"
+  "github.com/wonktnodi/go-services-base/pkg/persistence/store"
 )
 
 const (

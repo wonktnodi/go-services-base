@@ -1,8 +1,8 @@
 package config
 
 import (
-  "go-services-base/pkg/config"
-  "go-services-base/pkg/utils"
+  "github.com/wonktnodi/go-services-base/pkg/config"
+  "github.com/wonktnodi/go-services-base/pkg/utils"
 )
 
 var Settings = struct {

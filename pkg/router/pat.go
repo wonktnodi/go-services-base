@@ -83,7 +83,7 @@ package router
 import (
   "fmt"
   "regexp"
-  "go-services-base/pkg/utils"
+  "github.com/wonktnodi/go-services-base/pkg/utils"
   "sort"
   "strings"
 )

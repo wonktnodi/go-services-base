@@ -3,7 +3,7 @@ package router
 import (
   "fmt"
   "golang.org/x/text/encoding"
-  "go-services-base/pkg/logging"
+  "github.com/wonktnodi/go-services-base/pkg/logging"
   "time"
 )
 
