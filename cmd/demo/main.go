@@ -2,13 +2,13 @@ package main
 
 import (
   "fmt"
-  demoConfig "services-base/internal/config"
-  "services-base/internal/routers"
+  demoConfig "go-services-base/internal/config"
+  "go-services-base/internal/routers"
   
-  "services-base/internal/models"
-  "services-base/pkg/config"
-  "services-base/pkg/logging"
-  "services-base/pkg/utils"
+  "go-services-base/internal/models"
+  "go-services-base/pkg/config"
+  "go-services-base/pkg/logging"
+  "go-services-base/pkg/utils"
 )
 
 func main() {

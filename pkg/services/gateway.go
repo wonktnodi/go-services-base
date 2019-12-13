@@ -1,8 +1,8 @@
 package services
 
 import (
-  "services-base/pkg/logging"
-  "services-base/pkg/router"
+  "go-services-base/pkg/logging"
+  "go-services-base/pkg/router"
 )
 
 var apiEndpoints *router.Endpoints = nil

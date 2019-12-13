@@ -3,8 +3,8 @@ package routers
 import (
   "github.com/gin-contrib/cors"
   "github.com/gin-gonic/gin"
-  "services-base/internal/routers/devops"
-  "services-base/pkg/restful"
+  "go-services-base/internal/routers/devops"
+  "go-services-base/pkg/restful"
   "time"
 )
 

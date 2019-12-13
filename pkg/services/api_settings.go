@@ -1,9 +1,9 @@
 package services
 
 import (
-  "services-base/pkg/config"
-  "services-base/pkg/router"
-  "services-base/pkg/utils"
+  "go-services-base/pkg/config"
+  "go-services-base/pkg/router"
+  "go-services-base/pkg/utils"
 )
 
 func LoadEndpoints(fileName string) *router.Endpoints {

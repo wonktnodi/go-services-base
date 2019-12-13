@@ -3,8 +3,8 @@ package restful
 import (
   "github.com/gin-gonic/gin"
   "net/http"
-  "services-base/pkg"
-  "services-base/pkg/sessions"
+  "go-services-base/pkg"
+  "go-services-base/pkg/sessions"
 )
 
 func Version(c *gin.Context) {

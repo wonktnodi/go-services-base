@@ -1,4 +1,4 @@
-module services-base
+module go-services-base
 
 go 1.13
 

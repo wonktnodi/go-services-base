@@ -7,9 +7,9 @@ import (
   "github.com/go-resty/resty/v2"
   "net/http"
   "net/http/httputil"
-  "services-base/pkg/errors"
-  "services-base/pkg/logging"
-  "services-base/pkg/services"
+  "go-services-base/pkg/errors"
+  "go-services-base/pkg/logging"
+  "go-services-base/pkg/services"
 )
 
 type ApiRequest struct {

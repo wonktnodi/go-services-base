@@ -4,11 +4,11 @@ import (
   "fmt"
   "github.com/allegro/bigcache"
   "github.com/go-redis/redis/v7"
-  "services-base/pkg/config"
-  "services-base/pkg/logging"
-  "services-base/pkg/persistence/cache"
-  "services-base/pkg/persistence/marshaller"
-  "services-base/pkg/persistence/store"
+  "go-services-base/pkg/config"
+  "go-services-base/pkg/logging"
+  "go-services-base/pkg/persistence/cache"
+  "go-services-base/pkg/persistence/marshaller"
+  "go-services-base/pkg/persistence/store"
   "time"
 )
 

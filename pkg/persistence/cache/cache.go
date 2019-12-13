@@ -4,8 +4,8 @@ import (
   "crypto"
   "fmt"
   "reflect"
-  "services-base/pkg/persistence/codec"
-  "services-base/pkg/persistence/store"
+  "go-services-base/pkg/persistence/codec"
+  "go-services-base/pkg/persistence/store"
   "strings"
 )
 

@@ -1,7 +1,7 @@
 package codec
 
 import (
-  "services-base/pkg/persistence/store"
+  "go-services-base/pkg/persistence/store"
 )
 
 // Stats allows to returns some statistics of codec usage

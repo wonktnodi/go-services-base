@@ -1,9 +1,9 @@
 package models
 
 import (
-  "services-base/pkg/config"
-  "services-base/pkg/logging"
-  "services-base/pkg/persistence"
+  "go-services-base/pkg/config"
+  "go-services-base/pkg/logging"
+  "go-services-base/pkg/persistence"
 )
 
 var CacheStore persistence.CacheStore

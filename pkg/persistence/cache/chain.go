@@ -3,7 +3,7 @@ package cache
 import (
   "fmt"
   "log"
-  "services-base/pkg/persistence/store"
+  "go-services-base/pkg/persistence/store"
 )
 
 const (
