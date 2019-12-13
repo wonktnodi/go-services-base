@@ -1,0 +1,11 @@
+[general]
+port = 8090
+debug = 1
+mock = 1
+logLevel = 0
+runMode = 1
+
+[redis]
+address = "localhost"
+port = 6379
+

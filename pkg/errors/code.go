@@ -1,0 +1,36 @@
+package errors
+
+const (
+  SUCCESS        = 0
+  INTERNAL_ERROR = 500
+  INVALID_PARAMS = 400
+  NOT_FOUND      = 404
+  
+  ERROR_EXIST       = 10001
+  ERROR_EXIST_FAIL  = 10002
+  ERROR_NOT_EXIST   = 10003
+  ERROR_GET_S_FAIL  = 10004
+  ERROR_COUNT_FAIL  = 10005
+  ERROR_ADD_FAIL    = 10006
+  ERROR_EDIT_FAIL   = 10007
+  ERROR_DELETE_FAIL = 10008
+  ERROR_EXPORT_FAIL = 10009
+  ERROR_IMPORT_FAIL = 10010
+  
+  ERROR_AUTH_CHECK_TOKEN_FAIL    = 20001
+  ERROR_AUTH_CHECK_TOKEN_TIMEOUT = 20002
+  ERROR_AUTH_TOKEN               = 20003
+  ERROR_AUTH                     = 20004
+  ERROR_AUTH_TIMEOUT             = 20005
+  
+  INTERNAL_REQUEST_FAILED = 30001
+)
+
+func GenErrorMsg(code int) string {
+  switch code {
+  case NOT_FOUND:
+    return "找不到数据"
+  default:
+    return "未知错误"
+  }
+}
