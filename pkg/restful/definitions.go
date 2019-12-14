@@ -1,6 +1,11 @@
 package restful
 
-import "encoding/json"
+import (
+  "encoding/json"
+  "github.com/gin-gonic/gin"
+  "github.com/wonktnodi/go-services-base/pkg/logging"
+  "strconv"
+)
 
 const (
   SESSION_COOKIE_KEY_SESSION = "sid"
@@ -16,9 +21,10 @@ const (
 var EmptyData interface{}
 
 type Pagination struct {
-  Limit  int `json:"limit"`
-  Offset int `json:"offset"`
-  Total  int `json:"total"`
+  Limit    int `json:"limit"`
+  Offset   int `json:"offset"`
+  Total    int `json:"total"`
+  StartRow int `json:"-"`
 }
 
 type BackendResponse struct {
@@ -33,4 +39,37 @@ type Response struct {
   Msg    string      `json:"msg,omitempty"`
   Data   interface{} `json:"data,omitempty"`
   Paging *Pagination `json:"paging,omitempty"`
+}
+
+func ParsePagination(c *gin.Context) (ret *Pagination) {
+  var paging Pagination
+  var err error
+  strVal := c.Query("limit")
+  if strVal == "" {
+    paging.Limit = 20
+  } else {
+    paging.Limit, err = strconv.Atoi(strVal)
+    if err != nil {
+      logging.WarnF("failed to parse pagination limit, %s", err)
+      return nil
+    }
+  }
+  
+  strVal = c.Query("offset")
+  if strVal == "" {
+    paging.Offset = 1
+  } else {
+    paging.Offset, err = strconv.Atoi(strVal)
+    if err != nil {
+      logging.WarnF("failed to parse pagination offset, %s", err)
+    }
+  }
+  
+  if paging.Offset < 1 {
+    paging.Offset = 1
+  }
+  paging.StartRow = (paging.Offset - 1) * paging.Limit
+  
+  ret = &paging
+  return
 }
