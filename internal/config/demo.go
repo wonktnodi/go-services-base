@@ -8,6 +8,7 @@ import (
 var Settings = struct {
   Server config.ServerSetting
   Redis  config.RedisSetting
+  Database config.Database
 }{}
 
 func LoadSettings() {

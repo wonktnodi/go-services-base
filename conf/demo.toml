@@ -9,3 +9,9 @@ runMode = 1
 address = "localhost"
 port = 6379
 
+[database]
+host = "47.103.123.140"
+port = 10086
+user = "usersApi"
+pwd = "skl@654321"
+name = "users"
