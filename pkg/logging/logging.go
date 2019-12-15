@@ -53,7 +53,7 @@ func Info(args ...interface{}) {
   logger.Debug(args...)
 }
 
-func InfoF(format string, args ...interface{}) {
+func Infof(format string, args ...interface{}) {
   logger.Debugf(format, args...)
 }
 
@@ -61,7 +61,7 @@ func Warn(args ...interface{}) {
   logger.Debug(args...)
 }
 
-func WarnF(format string, args ...interface{}) {
+func Warnf(format string, args ...interface{}) {
   logger.Debugf(format, args...)
 }
 

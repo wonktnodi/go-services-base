@@ -30,6 +30,6 @@ func StartService(router *gin.Engine, setting *config.ServerSetting) error {
     server.WriteTimeout = writeTimeout
   }
   
-  logging.InfoF("start service at %s", endPoint)
+  logging.Infof("start service at %s", endPoint)
   return server.ListenAndServe()
 }

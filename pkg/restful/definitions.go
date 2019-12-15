@@ -50,7 +50,7 @@ func ParsePagination(c *gin.Context) (ret *Pagination) {
   } else {
     paging.Limit, err = strconv.Atoi(strVal)
     if err != nil {
-      logging.WarnF("failed to parse pagination limit, %s", err)
+      logging.Warnf("failed to parse pagination limit, %s", err)
       return nil
     }
   }
@@ -61,7 +61,7 @@ func ParsePagination(c *gin.Context) (ret *Pagination) {
   } else {
     paging.Offset, err = strconv.Atoi(strVal)
     if err != nil {
-      logging.WarnF("failed to parse pagination offset, %s", err)
+      logging.Warnf("failed to parse pagination offset, %s", err)
     }
   }
   
