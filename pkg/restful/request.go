@@ -208,7 +208,7 @@ func (r *ApiRequest) Get(path string, vars ...fmt.Stringer) (ret *BackendRespons
   ret = &response
   if ret.Code != errors.SUCCESS {
     logging.Warnf("[GET]%s failed with code %d", url, ret.Code)
-    code = errors.INTERNAL_REQUEST_FAILED
+    //code = errors.INTERNAL_REQUEST_FAILED
   }
   return
 }
