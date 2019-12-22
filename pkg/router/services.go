@@ -2,8 +2,8 @@ package router
 
 import (
   "fmt"
-  "golang.org/x/text/encoding"
   "github.com/wonktnodi/go-services-base/pkg/logging"
+  "golang.org/x/text/encoding"
   "time"
 )
 
@@ -13,7 +13,10 @@ type ServiceConfig struct {
   // default TTL for GET
   CacheTTL time.Duration
   // default set of hosts
-  Host []string
+  Host      []string
+  HostNames map[string]struct {
+    Host []string
+  }
   // version code of the configuration
   Version int
   
@@ -127,6 +130,23 @@ func loadEndpoints(config *ServiceConfig) (ret map[string]*EndpointConfig) {
     if item.Timeout == 0 {
       item.Timeout = config.Timeout
     }
+    // replace backend hostname
+    for _, b := range item.Backend {
+      if len(b.Host) == 0 {
+        continue
+      }
+      var hosts = make([]string, 0)
+      for _, h := range b.Host {
+        val, ok := config.HostNames[h]
+        if ok {
+          hosts = append(hosts, val.Host...)
+        } else {
+          hosts = append(hosts, h)
+        }
+      }
+      b.Host = hosts
+    }
+    
     item.pat = NewUriPattern(item.Endpoint)
     ret[fmt.Sprintf("%s_%s", item.Method, item.Endpoint)] = item
   }
