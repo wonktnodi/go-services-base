@@ -3,7 +3,9 @@ package routers
 import (
   "github.com/gin-gonic/gin"
   "github.com/wonktnodi/go-services-base/pkg/auth"
+  "github.com/wonktnodi/go-services-base/pkg/errors"
   "github.com/wonktnodi/go-services-base/pkg/logging"
+  "github.com/wonktnodi/go-services-base/pkg/restful"
   "time"
 )
 
@@ -15,7 +17,10 @@ func unauthorized(c *gin.Context, code int, message string) {
   return
 }
 
-func loginResponse(*gin.Context, int, string, time.Time, interface{}) {
+func loginResponse(c *gin.Context, code int, token string, expire time.Time, data interface{}) {
+  session := restful.NewApiRequest(c, nil)
+  session.Response(code, errors.SUCCESS, data, nil)
+  
   return
 }
 

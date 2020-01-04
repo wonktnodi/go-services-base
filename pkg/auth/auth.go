@@ -127,7 +127,8 @@ func (h *BasicAuthHandler) SignIn(c *gin.Context) {
   session := sessions.DefaultMany(c, SESSION_COOKIE_KEY_TOKEN)
   session.Set("token", 11111111)
   session.Save()
-  c.Status(http.StatusOK)
+  
+  h.LoginResponse(c, http.StatusOK, "", time.Now(), "")
 }
 
 func (h *BasicAuthHandler) SignOut(c *gin.Context) {
