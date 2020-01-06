@@ -75,14 +75,14 @@ type AuthorizationHandler interface {
 }
 
 type BasicAuthHandler struct {
-  Authenticator func(c *gin.Context) (interface{}, error)
+  Authenticator func(c *gin.Context, info SignInInfo) (interface{}, error)
   //Authorizer func(data interface{}, c *gin.Context) bool
   Unauthorized  func(c *gin.Context, code int, message string)
   LoginResponse func(*gin.Context, int, string, time.Time, interface{})
 }
 
 func NewBasicAuthHandler(
-  Authenticator func(c *gin.Context) (interface{}, error),
+  Authenticator func(c *gin.Context, info SignInInfo) (interface{}, error),
   Unauthorized func(c *gin.Context, code int, message string),
   LoginResponse func(*gin.Context, int, string, time.Time, interface{})) (ret AuthorizationHandler) {
   ret = &BasicAuthHandler{
@@ -124,7 +124,7 @@ func (h *BasicAuthHandler) SignIn(c *gin.Context) {
     return
   }
   
-  data, err := h.Authenticator(c)
+  data, err := h.Authenticator(c, info)
   if err != nil {
     h.Unauthorized(c, http.StatusUnauthorized, "")
     return

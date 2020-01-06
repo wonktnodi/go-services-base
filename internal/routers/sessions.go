@@ -14,11 +14,11 @@ type userInfo struct {
   UserId   uint64 `json:"userId"`
 }
 
-func authenticator(c *gin.Context) (data interface{}, err error) {
-  var info = userInfo{
-    "user name 1",
-    111111,
-  }
+func authenticator(c *gin.Context, info auth.SignInInfo) (data interface{}, err error) {
+  //var info = userInfo{
+  //  "user name 1",
+  //  111111,
+  //}
   data = info
   return
 }
