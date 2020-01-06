@@ -124,11 +124,18 @@ func (h *BasicAuthHandler) SignIn(c *gin.Context) {
     return
   }
   
+  data, err := h.Authenticator(c)
+  if err != nil {
+    h.Unauthorized(c, http.StatusUnauthorized, "")
+    return
+  }
+  
+  // save session data
   session := sessions.DefaultMany(c, SESSION_COOKIE_KEY_TOKEN)
-  session.Set("token", 11111111)
+  session.Set("token", data)
   session.Save()
   
-  h.LoginResponse(c, http.StatusOK, "", time.Now(), "")
+  h.LoginResponse(c, http.StatusOK, "", time.Now(), data)
 }
 
 func (h *BasicAuthHandler) SignOut(c *gin.Context) {
