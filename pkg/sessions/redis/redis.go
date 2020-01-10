@@ -3,8 +3,8 @@ package redis
 import (
   "errors"
   "github.com/wonktnodi/go-services-base/pkg/sessions"
+  redistore "github.com/wonktnodi/go-services-base/pkg/sessions/store"
   
-  "github.com/boj/redistore"
   "github.com/gomodule/redigo/redis"
   gsessions "github.com/gorilla/sessions"
 )

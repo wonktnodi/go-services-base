@@ -3,7 +3,9 @@ package auth
 import (
   "context"
   "github.com/gin-gonic/gin"
+  "github.com/wonktnodi/go-services-base/pkg/errors"
   "github.com/wonktnodi/go-services-base/pkg/logging"
+  "github.com/wonktnodi/go-services-base/pkg/restful"
   "github.com/wonktnodi/go-services-base/pkg/sessions"
   "time"
   
@@ -75,30 +77,36 @@ type AuthorizationHandler interface {
 }
 
 type BasicAuthHandler struct {
-  Authenticator func(c *gin.Context, info SignInInfo) (interface{}, error)
+  Authenticator func(c *gin.Context, info SignInInfo) (interface{}, int)
   //Authorizer func(data interface{}, c *gin.Context) bool
-  Unauthorized  func(c *gin.Context, code int, message string)
-  LoginResponse func(*gin.Context, int, string, time.Time, interface{})
+  Unauthorized        func(c *gin.Context, code int, message string)
+  VerifyCodeGenerator func(c *gin.Context, info SignInInfo) (interface{}, int)
+  LoginResponse       func(*gin.Context, int, string, time.Time, interface {
+  })
 }
 
 func NewBasicAuthHandler(
-  Authenticator func(c *gin.Context, info SignInInfo) (interface{}, error),
+  Authenticator func(c *gin.Context, info SignInInfo) (interface{}, int),
   Unauthorized func(c *gin.Context, code int, message string),
+  VerifyCodeGenerator func(c *gin.Context, info SignInInfo) (interface{}, int),
   LoginResponse func(*gin.Context, int, string, time.Time, interface{})) (ret AuthorizationHandler) {
   ret = &BasicAuthHandler{
-    Authenticator: Authenticator,
-    Unauthorized:  Unauthorized,
-    LoginResponse: LoginResponse,
+    Authenticator:       Authenticator,
+    Unauthorized:        Unauthorized,
+    VerifyCodeGenerator: VerifyCodeGenerator,
+    LoginResponse:       LoginResponse,
   }
   return
 }
 
 func (h *BasicAuthHandler) Handshake(c *gin.Context) {
+  session := restful.NewApiRequest(c, nil)
+  
   sessions.DefaultMany(c, SESSION_COOKIE_KEY_LOGIN)
   sessions.DefaultMany(c, SESSION_COOKIE_KEY_SESSION)
   var info = SessionHandShake{}
   info.Alg = "md5"
-  c.JSON(http.StatusOK, info)
+  session.Response(http.StatusOK, errors.SUCCESS, info, nil)
 }
 
 func (h *BasicAuthHandler) GenerateVerifyCode(c *gin.Context) {
@@ -109,10 +117,14 @@ func (h *BasicAuthHandler) GenerateVerifyCode(c *gin.Context) {
     c.Status(http.StatusBadRequest)
     return
   }
+  session := restful.NewApiRequest(c, nil)
+  _, code := h.VerifyCodeGenerator(c, info)
+  if code != errors.SUCCESS {
+    session.ResponseCode(code)
+    return
+  }
   
-  sessions.DefaultMany(c, SESSION_COOKIE_KEY_CODE)
-  
-  c.Status(http.StatusOK)
+  session.ResponseCode(code)
 }
 
 func (h *BasicAuthHandler) SignIn(c *gin.Context) {
@@ -124,16 +136,11 @@ func (h *BasicAuthHandler) SignIn(c *gin.Context) {
     return
   }
   
-  data, err := h.Authenticator(c, info)
-  if err != nil {
-    h.Unauthorized(c, http.StatusUnauthorized, "")
+  data, code := h.Authenticator(c, info)
+  if code != errors.SUCCESS {
+    h.Unauthorized(c, code, "")
     return
   }
-  
-  // save session data
-  session := sessions.DefaultMany(c, SESSION_COOKIE_KEY_TOKEN)
-  session.Set("token", data)
-  session.Save()
   
   h.LoginResponse(c, http.StatusOK, "", time.Now(), data)
 }

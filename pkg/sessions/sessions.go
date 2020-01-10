@@ -1,12 +1,12 @@
 package sessions
 
 import (
+  "github.com/gorilla/sessions"
   "log"
   "net/http"
   
   "github.com/gin-gonic/gin"
   "github.com/gorilla/context"
-  "github.com/gorilla/sessions"
 )
 
 const (
@@ -62,6 +62,9 @@ type Session interface {
   Flashes(vars ...string) []interface{}
   // Options sets configuration for a session.
   Options(Options)
+  
+  GetOptions() Options
+  
   // Save saves all sessions used during the current request.
   Save() error
 }
@@ -133,6 +136,17 @@ func (s *session) Options(options Options) {
     MaxAge:   options.MaxAge,
     Secure:   options.Secure,
     HttpOnly: options.HttpOnly,
+  }
+}
+
+func (s *session) GetOptions() Options {
+  session := s.Session().Options
+  return Options{
+    Path:     session.Path,
+    Domain:   session.Domain,
+    MaxAge:   session.MaxAge,
+    Secure:   session.Secure,
+    HttpOnly: session.HttpOnly,
   }
 }
 
