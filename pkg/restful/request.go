@@ -5,11 +5,11 @@ import (
   "fmt"
   "github.com/gin-gonic/gin"
   "github.com/go-resty/resty/v2"
-  "net/http"
-  "net/http/httputil"
   "github.com/wonktnodi/go-services-base/pkg/errors"
   "github.com/wonktnodi/go-services-base/pkg/logging"
   "github.com/wonktnodi/go-services-base/pkg/services"
+  "net/http"
+  "net/http/httputil"
 )
 
 type ApiRequest struct {
@@ -27,7 +27,8 @@ func NewApiRequest(c *gin.Context, cookies map[string]string) *ApiRequest {
 }
 
 func (r *ApiRequest) Delete(path string, vars ...fmt.Stringer) (ret *BackendResponse, code int) {
-  endpoint := services.GetEndpoint(path, r.gin.Request.Method)
+  endpoint := services.GetEndpoint(path, "DELETE")
+  //endpoint := services.GetEndpoint(path, r.gin.Request.Method)
   if endpoint == nil {
     logging.Errorf("can't find router in api endpoint list: [%s]%s", r.gin.Request.Method, path)
     code = errors.INTERNAL_ERROR
@@ -74,7 +75,8 @@ func (r *ApiRequest) Delete(path string, vars ...fmt.Stringer) (ret *BackendResp
 }
 
 func (r *ApiRequest) Put(path string, data interface{}, vars ...fmt.Stringer) (ret *BackendResponse, code int) {
-  endpoint := services.GetEndpoint(path, r.gin.Request.Method)
+  //endpoint := services.GetEndpoint(path, r.gin.Request.Method)
+  endpoint := services.GetEndpoint(path, "PUT")
   if endpoint == nil {
     logging.Errorf("can't find router in api endpoint list: [%s]%s", r.gin.Request.Method, path)
     code = errors.INTERNAL_ERROR
@@ -121,7 +123,8 @@ func (r *ApiRequest) Put(path string, data interface{}, vars ...fmt.Stringer) (r
 }
 
 func (r *ApiRequest) Post(path string, data interface{}, vars ...fmt.Stringer) (ret *BackendResponse, code int) {
-  endpoint := services.GetEndpoint(path, r.gin.Request.Method)
+  //endpoint := services.GetEndpoint(path, r.gin.Request.Method)
+  endpoint := services.GetEndpoint(path, "POST")
   if endpoint == nil {
     logging.Errorf("can't find router in api endpoint list: [%s]%s", r.gin.Request.Method, path)
     code = errors.INTERNAL_ERROR
@@ -167,7 +170,8 @@ func (r *ApiRequest) Post(path string, data interface{}, vars ...fmt.Stringer) (
 }
 
 func (r *ApiRequest) Get(path string, vars ...fmt.Stringer) (ret *BackendResponse, code int) {
-  endpoint := services.GetEndpoint(path, r.gin.Request.Method)
+  //endpoint := services.GetEndpoint(path, r.gin.Request.Method)
+  endpoint := services.GetEndpoint(path, "GET")
   if endpoint == nil {
     logging.Errorf("can't find router[%s] in router map", path)
     code = errors.INTERNAL_ERROR

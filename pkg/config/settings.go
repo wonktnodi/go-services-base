@@ -5,6 +5,7 @@ type ServerSetting struct {
   LogLevel     int
   Address      string
   Port         int
+  Mock         int
   ReadTimeout  int64 // milliseconds
   WriteTimeout int64 // milliseconds
 }
