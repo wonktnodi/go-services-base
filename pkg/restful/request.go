@@ -77,9 +77,9 @@ func (r *ApiRequest) Delete(path string, vars ...fmt.Stringer) (ret *BackendResp
   if err != nil {
     logging.Warnf("failed to parse [%s]%s response body: %s", r.gin.Request.Method, path, err)
   }
-  if response.Code != errors.SUCCESS {
-    code = errors.INTERNAL_ERROR
-  }
+  //if response.Code != errors.SUCCESS {
+  //  code = errors.INTERNAL_ERROR
+  //}
   ret = &response
   return
 }
@@ -125,9 +125,9 @@ func (r *ApiRequest) Put(path string, data interface{}, vars ...fmt.Stringer) (r
   if err != nil {
     logging.Warnf("failed to parse [%s]%s response body: %s", r.gin.Request.Method, path, err)
   }
-  if response.Code != errors.SUCCESS {
-    code = errors.INTERNAL_ERROR
-  }
+  //if response.Code != errors.SUCCESS {
+  //  code = errors.INTERNAL_ERROR
+  //}
   ret = &response
   return
 }
@@ -172,9 +172,9 @@ func (r *ApiRequest) Post(path string, data interface{}, vars ...fmt.Stringer) (
   if err != nil {
     logging.Warnf("failed to parse [%s]%s response body: %s", r.gin.Request.Method, path, err)
   }
-  if response.Code != errors.SUCCESS {
-    code = errors.INTERNAL_ERROR
-  }
+  //if response.Code != errors.SUCCESS {
+  //  code = errors.INTERNAL_ERROR
+  //}
   ret = &response
   return
 }
