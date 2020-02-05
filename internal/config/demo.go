@@ -6,8 +6,8 @@ import (
 )
 
 var Settings = struct {
-  Server config.ServerSetting
-  Redis  config.RedisSetting
+  Server   config.ServerSetting
+  Redis    config.RedisSetting
   Database config.Database
 }{}
 
@@ -23,6 +23,10 @@ func LoadSettings() {
   }
   
   if err := config.GetSettingsByKey(settingsInst, "redis", &Settings.Redis); err != nil {
+    utils.Exit("error to read redis setting, %s\n", err);
+  }
+  
+  if err := config.GetSettingsByKey(settingsInst, "database", &Settings.Database); err != nil {
     utils.Exit("error to read redis setting, %s\n", err);
   }
   

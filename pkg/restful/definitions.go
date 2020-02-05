@@ -29,7 +29,7 @@ type Pagination struct {
 
 type BackendResponse struct {
   Code   int             `json:"code"`
-  Msg    string          `json:"msg,omitempty"`
+  Msg    string          `json:"message,omitempty"`
   Data   json.RawMessage `json:"data,omitempty"`
   Paging *Pagination     `json:"paging,omitempty"`
 }

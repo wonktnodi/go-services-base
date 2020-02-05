@@ -1,7 +1,6 @@
 package main
 
 import (
-  "fmt"
   demoConfig "github.com/wonktnodi/go-services-base/internal/config"
   "github.com/wonktnodi/go-services-base/internal/routers"
   "github.com/wonktnodi/go-services-base/pkg/cache"
@@ -22,10 +21,9 @@ func main() {
   modelSettings.DB = 1
   cache.Init(&modelSettings)
   
-  databases.InitMysql(&demoConfig.Settings.Database, true)
+  databases.InitMysql(&demoConfig.Settings.Database, true, true)
   routers := routers.InitRouters()
   
-  fmt.Print("daadd")
   var cfg = config.ServerSetting{}
   cfg.Port = 8080
   cfg.Address = ""

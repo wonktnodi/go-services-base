@@ -7,6 +7,7 @@ import (
   "github.com/gin-gonic/gin"
   "github.com/wonktnodi/go-services-base/internal/config"
   "github.com/wonktnodi/go-services-base/internal/models"
+  "github.com/wonktnodi/go-services-base/internal/routers/demo"
   "github.com/wonktnodi/go-services-base/internal/routers/devops"
   "github.com/wonktnodi/go-services-base/pkg/logging"
   "github.com/wonktnodi/go-services-base/pkg/restful"
@@ -61,5 +62,6 @@ func InitRouters() *gin.Engine {
   apiV1.PUT("/sessions", authHandler.RefreshSession)
   apiV1.DELETE("/sessions", authHandler.SignOut)
   
+  apiV1.GET("users", demo.GetUswers)
   return r
 }

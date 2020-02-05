@@ -26,6 +26,16 @@ func NewApiRequest(c *gin.Context, cookies map[string]string) *ApiRequest {
   }
 }
 
+func (r *ApiRequest) GetRawBodyAsJson() (body json.RawMessage, code int) {
+  err := r.gin.ShouldBind(&body)
+  if err != nil {
+    logging.Warnf("parse raw body failed, %s", err)
+    code = errors.INTERNAL_ERROR
+    return
+  }
+  return
+}
+
 func (r *ApiRequest) Delete(path string, vars ...fmt.Stringer) (ret *BackendResponse, code int) {
   endpoint := services.GetEndpoint(path, "DELETE")
   //endpoint := services.GetEndpoint(path, r.gin.Request.Method)
