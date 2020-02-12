@@ -62,6 +62,6 @@ func InitRouters() *gin.Engine {
   apiV1.PUT("/sessions", authHandler.RefreshSession)
   apiV1.DELETE("/sessions", authHandler.SignOut)
   
-  apiV1.GET("users", demo.GetUswers)
+  apiV1.GET("/users", demo.GetUsers)
   return r
 }

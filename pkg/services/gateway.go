@@ -7,8 +7,11 @@ import (
 
 var apiEndpoints *router.Endpoints = nil
 
-func InitServices() {
-  apiEndpoints = LoadEndpoints("api-setting")
+func InitServices(filename string) {
+  if filename == "" {
+    filename = "api-setting"
+  }
+  apiEndpoints = LoadEndpoints(filename)
 }
 
 func GetEndpoint(path, method string) (endpoint *router.EndpointConfig) {

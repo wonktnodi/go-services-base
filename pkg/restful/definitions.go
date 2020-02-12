@@ -41,25 +41,29 @@ type Response struct {
   Paging *Pagination `json:"paging,omitempty"`
 }
 
-func ParsePagination(c *gin.Context) (ret *Pagination) {
+func ParsePagination(c *gin.Context, defaultValue bool) (ret *Pagination) {
   var paging Pagination
   var err error
-  strVal := c.Query("limit")
-  if strVal == "" {
+  limitVal := c.Query("limit")
+  offsetVal := c.Query("offset")
+  
+  if defaultValue == false && limitVal == "" && offsetVal == "" {
+    return nil
+  }
+  if limitVal == "" {
     paging.Limit = 20
   } else {
-    paging.Limit, err = strconv.Atoi(strVal)
+    paging.Limit, err = strconv.Atoi(limitVal)
     if err != nil {
       logging.Warnf("failed to parse pagination limit, %s", err)
       return nil
     }
   }
   
-  strVal = c.Query("offset")
-  if strVal == "" {
+  if offsetVal == "" {
     paging.Offset = 1
   } else {
-    paging.Offset, err = strconv.Atoi(strVal)
+    paging.Offset, err = strconv.Atoi(offsetVal)
     if err != nil {
       logging.Warnf("failed to parse pagination offset, %s", err)
     }
