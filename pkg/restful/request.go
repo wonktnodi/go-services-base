@@ -36,7 +36,7 @@ func (r *ApiRequest) GetRawBodyAsJson() (body json.RawMessage, code int) {
   return
 }
 
-func (r *ApiRequest) Delete(path string, vars ...fmt.Stringer) (ret *BackendResponse, code int) {
+func (r *ApiRequest) Delete(path string, data interface{}, vars ...fmt.Stringer) (ret *BackendResponse, code int) {
   endpoint := services.GetEndpoint(path, "DELETE")
   //endpoint := services.GetEndpoint(path, r.gin.Request.Method)
   if endpoint == nil {
@@ -62,6 +62,9 @@ func (r *ApiRequest) Delete(path string, vars ...fmt.Stringer) (ret *BackendResp
     })
   }
   
+  if data != nil {
+    request.SetBody(data)
+  }
   resp, err := request.Delete(url)
   if err != nil {
     logging.Errorf("%s: failed to send post data, %s", url, err)
