@@ -11,6 +11,7 @@ import (
 )
 
 var defaultTimeout = 0
+var debug = true
 
 func PutForm(url string, data interface{}, rawQuery string,
   cookies map[string]string, timeout time.Duration) (ret *BackendResponse, code int) {
@@ -25,6 +26,7 @@ func PutJson(url string, data interface{}, rawQuery string,
 func put(url string, data interface{}, form bool, rawQuery string,
   cookies map[string]string, timeout time.Duration) (ret *BackendResponse, code int) {
   client := resty.New()
+  client.SetDebug(debug)
   client.SetLogger(logging.GetLogger())
   if timeout != 0 {
     client.SetTimeout(timeout)
@@ -79,6 +81,7 @@ func PostJson(url string, data interface{}, rawQuery string,
 func post(url string, data interface{}, form bool, rawQuery string,
   cookies map[string]string, timeout time.Duration) (ret *BackendResponse, code int) {
   client := resty.New()
+  client.SetDebug(debug)
   client.SetLogger(logging.GetLogger())
 
   if timeout != 0 {
@@ -123,6 +126,7 @@ func post(url string, data interface{}, form bool, rawQuery string,
 func Get(url string, rawQuery string, data interface{},
   cookies map[string]string, timeout time.Duration) (ret *BackendResponse, code int) {
   client := resty.New()
+  client.SetDebug(debug)
   client.SetLogger(logging.GetLogger())
 
   if timeout != 0 {
@@ -166,6 +170,7 @@ func Get(url string, rawQuery string, data interface{},
 func Delete(url string, rawQuery string, data interface{},
   cookies map[string]string, timeout time.Duration) (ret *BackendResponse, code int) {
   client := resty.New()
+  client.SetDebug(debug)
   client.SetLogger(logging.GetLogger())
 
   if timeout != 0 {
