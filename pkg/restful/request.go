@@ -6,7 +6,6 @@ import (
   "github.com/wonktnodi/go-services-base/pkg/errors"
   "github.com/wonktnodi/go-services-base/pkg/logging"
   "net/http"
-  "net/http/httputil"
   "time"
 )
 
@@ -55,10 +54,10 @@ func put(url string, data interface{}, form bool, rawQuery string,
     code = errors.INTERNAL_ERROR
     return
   }
-  dumpRequest, _ := httputil.DumpRequest(request.RawRequest, true)
-  requestBody, _ := json.Marshal(request.Body)
-  logging.Tracef("Sending ===>:\n %s\n%+v\nReceived ===>:\n %s",
-    string(dumpRequest), string(requestBody), resp.String())
+  //dumpRequest, _ := httputil.DumpRequest(request.RawRequest, true)
+  //requestBody, _ := json.Marshal(request.Body)
+  //logging.Tracef("Sending ===>:\n %s\n%+v\nReceived ===>:\n %s",
+  //  string(dumpRequest), string(requestBody), resp.String())
 
   err = json.Unmarshal(resp.Body(), &response)
   if err != nil {
@@ -110,10 +109,10 @@ func post(url string, data interface{}, form bool, rawQuery string,
     code = errors.INTERNAL_ERROR
     return
   }
-  dumpRequest, _ := httputil.DumpRequest(request.RawRequest, true)
-  requestBody, _ := json.Marshal(request.Body)
-  logging.Tracef("Sending ===>:\n %s\n%+v\nReceived ===>:\n %s",
-    string(dumpRequest), string(requestBody), resp.String())
+  //dumpRequest, _ := httputil.DumpRequest(request.RawRequest, true)
+  //requestBody, _ := json.Marshal(request.Body)
+  //logging.Tracef("Sending ===>:\n %s\n%+v\nReceived ===>:\n %s",
+  //  string(dumpRequest), string(requestBody), resp.String())
 
   err = json.Unmarshal(resp.Body(), &response)
   if err != nil {
@@ -155,10 +154,10 @@ func Get(url string, rawQuery string, data interface{},
     code = errors.INTERNAL_ERROR
     return
   }
-  dumpRequest, _ := httputil.DumpRequest(request.RawRequest, true)
-  requestBody, _ := json.Marshal(request.Body)
-  logging.Tracef("Sending ===>:\n %s\n%+v\nReceived ===>:\n %s",
-    string(dumpRequest), string(requestBody), resp.String())
+  //dumpRequest, _ := httputil.DumpRequest(request.RawRequest, true)
+  //requestBody, _ := json.Marshal(request.Body)
+  //logging.Tracef("Sending ===>:\n %s\n%+v\nReceived ===>:\n %s",
+  //  string(dumpRequest), string(requestBody), resp.String())
   err = json.Unmarshal(resp.Body(), &response)
   if err != nil {
     logging.Warnf("failed to parse [GET]%s response body: %s", url, err)
@@ -198,10 +197,10 @@ func Delete(url string, rawQuery string, data interface{},
     code = errors.INTERNAL_ERROR
     return
   }
-  dumpRequest, _ := httputil.DumpRequest(request.RawRequest, true)
-  requestBody, _ := json.Marshal(request.Body)
-  logging.Tracef("Sending ===>:\n %s\n%+v\nReceived ===>:\n %s",
-    string(dumpRequest), string(requestBody), resp.String())
+  //dumpRequest, _ := httputil.DumpRequest(request.RawRequest, true)
+  //requestBody, _ := json.Marshal(request.Body)
+  //logging.Tracef("Sending ===>:\n %s\n%+v\nReceived ===>:\n %s",
+  //  string(dumpRequest), string(requestBody), resp.String())
   err = json.Unmarshal(resp.Body(), &response)
   if err != nil {
     logging.Warnf("failed to parse [DELETE]%s response body: %s", url, err)
