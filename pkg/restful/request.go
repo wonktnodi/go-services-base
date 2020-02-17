@@ -12,7 +12,17 @@ import (
 
 var defaultTimeout = 0
 
-func Put(url string, rawQuery string, data interface{},
+func PutForm(url string, data interface{}, rawQuery string,
+  cookies map[string]string, timeout time.Duration) (ret *BackendResponse, code int) {
+  return put(url, data, true, rawQuery, cookies, timeout)
+}
+
+func PutJson(url string, data interface{}, rawQuery string,
+  cookies map[string]string, timeout time.Duration) (ret *BackendResponse, code int) {
+  return put(url, data, false, rawQuery, cookies, timeout)
+}
+
+func put(url string, data interface{}, form bool, rawQuery string,
   cookies map[string]string, timeout time.Duration) (ret *BackendResponse, code int) {
   client := resty.New()
   client.SetLogger(logging.GetLogger())
@@ -31,7 +41,13 @@ func Put(url string, rawQuery string, data interface{},
     })
   }
 
-  resp, err := request.SetBody(data).Put(url)
+  if form == true {
+    request = request.SetFormData(data.(map[string]string))
+  } else {
+    request = request.SetBody(data)
+  }
+
+  resp, err := request.Put(url)
   if err != nil {
     logging.Errorf("%s: failed to send post data, %s", url, err)
     code = errors.INTERNAL_ERROR
@@ -50,7 +66,17 @@ func Put(url string, rawQuery string, data interface{},
   return
 }
 
-func Post(url string, rawQuery string, data interface{},
+func PostForm(url string, data interface{}, rawQuery string,
+  cookies map[string]string, timeout time.Duration) (ret *BackendResponse, code int) {
+  return post(url, data, true, rawQuery, cookies, timeout)
+}
+
+func PostJson(url string, data interface{}, rawQuery string,
+  cookies map[string]string, timeout time.Duration) (ret *BackendResponse, code int) {
+  return post(url, data, false, rawQuery, cookies, timeout)
+}
+
+func post(url string, data interface{}, form bool, rawQuery string,
   cookies map[string]string, timeout time.Duration) (ret *BackendResponse, code int) {
   client := resty.New()
   client.SetLogger(logging.GetLogger())
@@ -69,8 +95,13 @@ func Post(url string, rawQuery string, data interface{},
       Value: c,
     })
   }
+  if form == true {
+    request = request.SetFormData(data.(map[string]string))
+  } else {
+    request = request.SetBody(data)
+  }
 
-  resp, err := request.SetBody(data).Post(url)
+  resp, err := request.Post(url)
   if err != nil {
     logging.Errorf("%s: failed to send post data, %s", url, err)
     code = errors.INTERNAL_ERROR

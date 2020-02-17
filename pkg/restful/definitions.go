@@ -12,7 +12,7 @@ const (
   SESSION_COOKIE_KEY_LOGIN   = "lsid"
   SESSION_COOKIE_KEY_CODE    = "msid"
   SESSION_COOKIE_KEY_TOKEN   = "token"
-  
+
   SESSION_NAME_SESSION = "session-info"
   SESSION_NAME_LOGIN   = "login-session"
   SESSION_NAME_TOKEN   = "token"
@@ -28,10 +28,11 @@ type Pagination struct {
 }
 
 type BackendResponse struct {
-  Code   int             `json:"code"`
-  Msg    string          `json:"message,omitempty"`
-  Data   json.RawMessage `json:"data,omitempty"`
-  Paging *Pagination     `json:"paging,omitempty"`
+  Code    int             `json:"code"`
+  Msg     string          `json:"msg,omitempty"`
+  Message string          `json:"message,omitempty"`
+  Data    json.RawMessage `json:"data,omitempty"`
+  Paging  *Pagination     `json:"paging,omitempty"`
 }
 
 type Response struct {
@@ -46,7 +47,7 @@ func ParsePagination(c *gin.Context, defaultValue bool) (ret *Pagination) {
   var err error
   limitVal := c.Query("limit")
   offsetVal := c.Query("offset")
-  
+
   if defaultValue == false && limitVal == "" && offsetVal == "" {
     return nil
   }
@@ -59,7 +60,7 @@ func ParsePagination(c *gin.Context, defaultValue bool) (ret *Pagination) {
       return nil
     }
   }
-  
+
   if offsetVal == "" {
     paging.Offset = 1
   } else {
@@ -68,12 +69,12 @@ func ParsePagination(c *gin.Context, defaultValue bool) (ret *Pagination) {
       logging.Warnf("failed to parse pagination offset, %s", err)
     }
   }
-  
+
   if paging.Offset < 1 {
     paging.Offset = 1
   }
   paging.StartRow = (paging.Offset - 1) * paging.Limit
-  
+
   ret = &paging
   return
 }
