@@ -84,3 +84,7 @@ func Fatalf(format string, args ...interface{}) {
 func SetLevel(level int) {
   logger.SetLevel(level)
 }
+
+func GetLogger() Logger {
+  return logger
+}
