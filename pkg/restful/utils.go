@@ -22,23 +22,25 @@ func GetSessionInfo(c *gin.Context, name string) sessions.Session {
 
 func ResponseData(session *ApiRequest, code int, data interface{}) {
   if code != errors.SUCCESS {
-    session.FailedResult(code)
+    session.ResponseCode(code)
     return
   }
-  resp := Response{
-    Data: data,
+  resp := Response{}
+  if data != nil {
+    resp.Data = data
   }
   session.Success(&resp)
 }
 
 func ResponseDataWithPagination(session *ApiRequest, code int, data interface{}, paging *Pagination) {
   if code != errors.SUCCESS {
-    session.FailedResult(code)
+    session.ResponseCode(code)
     return
   }
-  
-  resp := Response{
-    Data: data,
+
+  resp := Response{}
+  if data != nil {
+    resp.Data = data
   }
   if paging != nil {
     resp.Paging = paging
