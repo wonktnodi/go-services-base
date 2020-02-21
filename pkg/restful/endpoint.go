@@ -13,13 +13,13 @@ import (
 )
 
 type ApiRequest struct {
-  gin *gin.Context
+  gin     *gin.Context
   cookies map[string]string
 }
 
 func NewApiRequest(c *gin.Context, cookies map[string]string) *ApiRequest {
   return &ApiRequest{
-    gin: c,
+    gin:     c,
     cookies: cookies,
   }
 }
@@ -46,7 +46,7 @@ func (r *ApiRequest) Delete(path string, data interface{}, vars ...fmt.Stringer)
   if endpoint.Timeout != 0 {
     client.SetTimeout(endpoint.Timeout)
   }
-  
+
   var response BackendResponse
   request := client.R().EnableTrace()
   if endpoint.BringQuery {
@@ -58,7 +58,7 @@ func (r *ApiRequest) Delete(path string, data interface{}, vars ...fmt.Stringer)
       Value: c,
     })
   }
-  
+
   if data != nil {
     request.SetBody(data)
   }
@@ -72,7 +72,7 @@ func (r *ApiRequest) Delete(path string, data interface{}, vars ...fmt.Stringer)
   requestBody, _ := json.Marshal(request.Body)
   logging.Tracef("Sending ===>:\n %s\n%+v\nReceived ===>:\n %s",
     string(dumpRequest), string(requestBody), resp.String())
-  
+
   err = json.Unmarshal(resp.Body(), &response)
   if err != nil {
     logging.Warnf("failed to parse [%s]%s response body: %s", r.gin.Request.Method, path, err)
@@ -93,7 +93,7 @@ func (r *ApiRequest) Put(path string, data interface{}, vars ...fmt.Stringer) (r
   if endpoint.Timeout != 0 {
     client.SetTimeout(endpoint.Timeout)
   }
-  
+
   var response BackendResponse
   request := client.R().EnableTrace()
   if endpoint.BringQuery {
@@ -105,7 +105,7 @@ func (r *ApiRequest) Put(path string, data interface{}, vars ...fmt.Stringer) (r
       Value: c,
     })
   }
-  
+
   resp, err := request.SetBody(data).Put(url)
   if err != nil {
     logging.Errorf("%s: failed to send post data, %s", url, err)
@@ -116,7 +116,7 @@ func (r *ApiRequest) Put(path string, data interface{}, vars ...fmt.Stringer) (r
   requestBody, _ := json.Marshal(request.Body)
   logging.Tracef("Sending ===>:\n %s\n%+v\nReceived ===>:\n %s",
     string(dumpRequest), string(requestBody), resp.String())
-  
+
   err = json.Unmarshal(resp.Body(), &response)
   if err != nil {
     logging.Warnf("failed to parse [%s]%s response body: %s", r.gin.Request.Method, path, err)
@@ -149,7 +149,7 @@ func (r *ApiRequest) Post(path string, data interface{}, vars ...fmt.Stringer) (
       Value: c,
     })
   }
-  
+
   resp, err := request.SetBody(data).Post(url)
   if err != nil {
     logging.Errorf("%s: failed to send post data, %s", url, err)
@@ -160,7 +160,7 @@ func (r *ApiRequest) Post(path string, data interface{}, vars ...fmt.Stringer) (
   requestBody, _ := json.Marshal(request.Body)
   logging.Tracef("Sending ===>:\n %s\n%+v\nReceived ===>:\n %s",
     string(dumpRequest), string(requestBody), resp.String())
-  
+
   err = json.Unmarshal(resp.Body(), &response)
   if err != nil {
     logging.Warnf("failed to parse [%s]%s response body: %s", r.gin.Request.Method, path, err)
@@ -177,7 +177,7 @@ func (r *ApiRequest) Get(path string, vars ...fmt.Stringer) (ret *BackendRespons
     code = errors.INTERNAL_ERROR
     return
   }
-  
+
   url := endpoint.BuildUrl(vars...)
   client := resty.New()
   if endpoint.Timeout != 0 {
@@ -194,7 +194,7 @@ func (r *ApiRequest) Get(path string, vars ...fmt.Stringer) (ret *BackendRespons
       Value: c,
     })
   }
-  
+
   resp, err := request.SetResult(&response).Get(url)
   if resp.StatusCode() != http.StatusOK {
     code = resp.StatusCode()
@@ -203,7 +203,7 @@ func (r *ApiRequest) Get(path string, vars ...fmt.Stringer) (ret *BackendRespons
   dumpRequest, _ := httputil.DumpRequest(request.RawRequest, true)
   logging.Tracef("Sending ===>:\n %s\nReceived ===>:\n %s",
     string(dumpRequest), resp.String())
-  
+
   if err != nil {
     logging.Errorf("%s: failed to get response, %s", url, err)
     code = errors.INTERNAL_ERROR
@@ -220,7 +220,9 @@ func (r *ApiRequest) Get(path string, vars ...fmt.Stringer) (ret *BackendRespons
 func (r *ApiRequest) Response(httpCode, code int, data interface{}, paging *Pagination) {
   var resp Response
   resp.Code = code
-  resp.Data = data
+  if data != nil {
+    resp.Data = data
+  }
   if paging != nil {
     resp.Paging = paging
   }
@@ -230,6 +232,14 @@ func (r *ApiRequest) Response(httpCode, code int, data interface{}, paging *Pagi
 func (r *ApiRequest) ResponseCode(code int) {
   var resp Response
   resp.Code = code
+  r.gin.JSON(http.StatusOK, &resp)
+}
+
+func (r *ApiRequest) SuccessData(data interface{}) {
+  resp := Response{}
+  if data != nil {
+    resp.Data = data
+  }
   r.gin.JSON(http.StatusOK, &resp)
 }
 
@@ -249,8 +259,11 @@ func (r *ApiRequest) Failed(ret *Response, code int) {
   r.gin.JSON(http.StatusOK, ret)
 }
 
-func (r *ApiRequest) FailedResult(code int) {
-  var resp Response
+func (r *ApiRequest) FailedData(code int, data interface{}) {
+  resp := Response{}
   resp.Code = code
+  if data != nil {
+    resp.Data = data
+  }
   r.gin.JSON(http.StatusOK, &resp)
 }

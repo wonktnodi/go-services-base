@@ -54,10 +54,6 @@ func put(url string, data interface{}, form bool, rawQuery string,
     code = errors.INTERNAL_ERROR
     return
   }
-  //dumpRequest, _ := httputil.DumpRequest(request.RawRequest, true)
-  //requestBody, _ := json.Marshal(request.Body)
-  //logging.Tracef("Sending ===>:\n %s\n%+v\nReceived ===>:\n %s",
-  //  string(dumpRequest), string(requestBody), resp.String())
 
   err = json.Unmarshal(resp.Body(), &response)
   if err != nil {
@@ -109,11 +105,6 @@ func post(url string, data interface{}, form bool, rawQuery string,
     code = errors.INTERNAL_ERROR
     return
   }
-  //dumpRequest, _ := httputil.DumpRequest(request.RawRequest, true)
-  //requestBody, _ := json.Marshal(request.Body)
-  //logging.Tracef("Sending ===>:\n %s\n%+v\nReceived ===>:\n %s",
-  //  string(dumpRequest), string(requestBody), resp.String())
-
   err = json.Unmarshal(resp.Body(), &response)
   if err != nil {
     logging.Warnf("failed to parse [POST]%s response body: %s", url, err)
@@ -197,10 +188,6 @@ func Delete(url string, rawQuery string, data interface{},
     code = errors.INTERNAL_ERROR
     return
   }
-  //dumpRequest, _ := httputil.DumpRequest(request.RawRequest, true)
-  //requestBody, _ := json.Marshal(request.Body)
-  //logging.Tracef("Sending ===>:\n %s\n%+v\nReceived ===>:\n %s",
-  //  string(dumpRequest), string(requestBody), resp.String())
   err = json.Unmarshal(resp.Body(), &response)
   if err != nil {
     logging.Warnf("failed to parse [DELETE]%s response body: %s", url, err)
