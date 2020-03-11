@@ -22,6 +22,7 @@ func CheckServiceStatus() {
   if ok {
     close(quit)
   }
+  logging.Tracef("service status: down")
 }
 
 func StartService(router *gin.Engine, setting *config.ServerSetting) error {

@@ -4,6 +4,7 @@ go 1.13
 
 require (
 	github.com/allegro/bigcache v1.2.1
+	github.com/apache/rocketmq-client-go v1.2.4
 	github.com/boj/redistore v0.0.0-20180917114910-cd5dcc76aeff
 	github.com/gin-contrib/cors v1.3.0
 	github.com/gin-gonic/gin v1.5.0
