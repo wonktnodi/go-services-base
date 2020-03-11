@@ -27,6 +27,11 @@ func main() {
   var cfg = config.ServerSetting{}
   cfg.Port = 8080
   cfg.Address = ""
-  
+
+  go func() {
+    logging.Infof("routine start")
+    utils.CheckServiceStatus()
+    logging.Infof("routine end")
+  }()
   utils.StartService(routers, &demoConfig.Settings.Server)
 }
