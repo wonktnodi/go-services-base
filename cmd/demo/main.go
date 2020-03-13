@@ -5,11 +5,11 @@ import (
   demoConfig "github.com/wonktnodi/go-services-base/internal/config"
   "github.com/wonktnodi/go-services-base/internal/routers"
   "github.com/wonktnodi/go-services-base/pkg/cache"
-  "github.com/wonktnodi/go-services-base/pkg/databases"
-  "github.com/wonktnodi/go-services-base/pkg/mq"
-
   "github.com/wonktnodi/go-services-base/pkg/config"
+  "github.com/wonktnodi/go-services-base/pkg/databases"
   "github.com/wonktnodi/go-services-base/pkg/logging"
+  "github.com/wonktnodi/go-services-base/pkg/mq"
+  "github.com/wonktnodi/go-services-base/pkg/restful"
   "github.com/wonktnodi/go-services-base/pkg/utils"
 )
 
@@ -24,17 +24,12 @@ func main() {
   cache.Init(&modelSettings)
 
   databases.InitMysql(&demoConfig.Settings.Database, true, true)
+  restful.InitServices("backend")
   routers := routers.InitRouters()
 
   var cfg = config.ServerSetting{}
   cfg.Port = 8080
   cfg.Address = ""
-
-  //go func() {
-  //  logging.Infof("routine start")
-  //  utils.CheckServiceStatus()
-  //  logging.Infof("routine end")
-  //}()
 
   mq.InitMq(&demoConfig.Settings.RocketMQ, MqMsgProcess)
 

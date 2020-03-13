@@ -1,11 +1,10 @@
-package services
+package restful
 
 import (
   "github.com/wonktnodi/go-services-base/pkg/logging"
-  "github.com/wonktnodi/go-services-base/pkg/router"
 )
 
-var apiEndpoints *router.Endpoints = nil
+var apiEndpoints *Endpoints = nil
 
 func InitServices(filename string) {
   if filename == "" {
@@ -14,7 +13,7 @@ func InitServices(filename string) {
   apiEndpoints = LoadEndpoints(filename)
 }
 
-func GetEndpoint(path, method string) (endpoint *router.EndpointConfig) {
+func GetEndpoint(path, method string) (endpoint *Endpoint) {
   endpoint = apiEndpoints.GetEndpoint(path, method)
   if endpoint == nil {
     logging.Errorf("failed to find endpoint: [%s]%s", method, path)

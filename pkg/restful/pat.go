@@ -78,7 +78,7 @@ leaving the path "/carl/photos" for subsequent patterns to handle. A subrouter
 pattern for "/:name/photos" would match this remaining path segment, for
 instance.
 */
-package router
+package restful
 
 import (
   "fmt"

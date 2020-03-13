@@ -30,7 +30,6 @@ func put(url string, data interface{}, form bool, rawQuery string,
   if timeout != 0 {
     client.SetTimeout(timeout)
   }
-  var response BackendResponse
   request := client.R().EnableTrace()
   if rawQuery != "" {
     request.SetQueryString(rawQuery)
@@ -54,10 +53,22 @@ func put(url string, data interface{}, form bool, rawQuery string,
     code = errors.INTERNAL_ERROR
     return
   }
+  ret, code = parseResponse(resp)
+  return
+}
 
-  err = json.Unmarshal(resp.Body(), &response)
-  if err != nil {
-    logging.Warnf("failed to parse [PUT]%s response body: %s", url, err)
+func parseResponse(resp *resty.Response) (ret *BackendResponse, code int) {
+  if resp.StatusCode() != http.StatusOK {
+    code = resp.StatusCode()
+    return
+  }
+
+  var response BackendResponse
+  if len(resp.Body()) > 0 {
+    err := json.Unmarshal(resp.Body(), &response)
+    if err != nil {
+      logging.Warnf("failed to parse response body: %s", resp.Request.URL, err)
+    }
   }
   ret = &response
   return
@@ -105,6 +116,11 @@ func post(url string, data interface{}, form bool, rawQuery string,
     code = errors.INTERNAL_ERROR
     return
   }
+  if resp.StatusCode() != http.StatusOK {
+    code = resp.StatusCode()
+    return
+  }
+
   err = json.Unmarshal(resp.Body(), &response)
   if err != nil {
     logging.Warnf("failed to parse [POST]%s response body: %s", url, err)
@@ -113,7 +129,7 @@ func post(url string, data interface{}, form bool, rawQuery string,
   return
 }
 
-func Get(url string, rawQuery string, data interface{},
+func Get(url string, rawQuery string,
   cookies map[string]string, timeout time.Duration) (ret *BackendResponse, code int) {
   client := resty.New()
   client.SetDebug(debug)
@@ -136,19 +152,16 @@ func Get(url string, rawQuery string, data interface{},
   }
 
   resp, err := request.Get(url)
-  if resp.StatusCode() != http.StatusOK {
-    code = resp.StatusCode()
-    return
-  }
   if err != nil {
     logging.Errorf("%s: failed to get response, %s", url, err)
     code = errors.INTERNAL_ERROR
     return
   }
-  //dumpRequest, _ := httputil.DumpRequest(request.RawRequest, true)
-  //requestBody, _ := json.Marshal(request.Body)
-  //logging.Tracef("Sending ===>:\n %s\n%+v\nReceived ===>:\n %s",
-  //  string(dumpRequest), string(requestBody), resp.String())
+  if resp.StatusCode() != http.StatusOK {
+    code = resp.StatusCode()
+    return
+  }
+
   err = json.Unmarshal(resp.Body(), &response)
   if err != nil {
     logging.Warnf("failed to parse [GET]%s response body: %s", url, err)
@@ -188,6 +201,11 @@ func Delete(url string, rawQuery string, data interface{},
     code = errors.INTERNAL_ERROR
     return
   }
+  if resp.StatusCode() != http.StatusOK {
+    code = resp.StatusCode()
+    return
+  }
+
   err = json.Unmarshal(resp.Body(), &response)
   if err != nil {
     logging.Warnf("failed to parse [DELETE]%s response body: %s", url, err)

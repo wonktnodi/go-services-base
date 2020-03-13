@@ -32,12 +32,12 @@ func InitRouters() *gin.Engine {
     logging.Fatalf("failed to create session store: %v", err)
     return nil
   }
-  
+
   authHandler := InitSession()
   r := gin.New()
   r.Use(gin.Logger()) // 日志
   r.Use(sessions.SessionsMany(sessionNames, store))
-  
+
   r.Use(cors.New(cors.Config{
     //AllowAllOrigins:  true,
     AllowMethods:     []string{"PUT", "POST", "GET", "DELETE"},
@@ -50,18 +50,20 @@ func InitRouters() *gin.Engine {
     MaxAge: 12 * time.Hour,
   })) // 跨域请求
   r.Use(gin.Recovery())
-  
+
   r.GET("/version", restful.Version)
   r.GET("devops/cache/demo", devops.CacheTest)
   r.GET("devops/cache/demoGet", devops.CacheTestGet)
-  
+
   apiV1 := r.Group("v1")
   apiV1.GET("/sessions/new", authHandler.Handshake)
   apiV1.POST("/sessions/verifyCode", authHandler.GenerateVerifyCode)
   apiV1.POST("/sessions", authHandler.SignIn)
   apiV1.PUT("/sessions", authHandler.RefreshSession)
   apiV1.DELETE("/sessions", authHandler.SignOut)
-  
+
   apiV1.GET("/users", demo.GetUsers)
+  apiV1.POST("/users", demo.CreateUsers)
+  apiV1.DELETE("/users", demo.DeleteUsers)
   return r
 }
