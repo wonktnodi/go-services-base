@@ -10,6 +10,7 @@ import (
   "github.com/wonktnodi/go-services-base/internal/routers/demo"
   "github.com/wonktnodi/go-services-base/internal/routers/devops"
   "github.com/wonktnodi/go-services-base/pkg/logging"
+  "github.com/wonktnodi/go-services-base/pkg/middleware"
   "github.com/wonktnodi/go-services-base/pkg/restful"
   "github.com/wonktnodi/go-services-base/pkg/sessions"
   "github.com/wonktnodi/go-services-base/pkg/sessions/redis"
@@ -62,6 +63,7 @@ func InitRouters() *gin.Engine {
   apiV1.PUT("/sessions", authHandler.RefreshSession)
   apiV1.DELETE("/sessions", authHandler.SignOut)
 
+  apiV1.Use(middleware.Authorization(sessionAuthorized, sessionUnauthorized))
   apiV1.GET("/users", demo.GetUsers)
   apiV1.POST("/users", demo.CreateUsers)
   apiV1.DELETE("/users", demo.DeleteUsers)

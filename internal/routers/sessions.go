@@ -10,6 +10,7 @@ import (
   "github.com/wonktnodi/go-services-base/pkg/logging"
   "github.com/wonktnodi/go-services-base/pkg/restful"
   "github.com/wonktnodi/go-services-base/pkg/sessions"
+  "net/http"
   "time"
 )
 
@@ -37,7 +38,7 @@ func authenticator(c *gin.Context, info auth.SignInInfo) (data interface{}, code
     code = serviceErrors.ERROR_AUTH
     return
   }
-  
+
   var options = sessions.Options{
     MaxAge:   -1,
     HttpOnly: true,
@@ -46,7 +47,7 @@ func authenticator(c *gin.Context, info auth.SignInInfo) (data interface{}, code
   store.Clear()
   store.Options(options)
   store.Save()
-  
+
   // AllowAllOrigins
   data = "test data"
   return
@@ -62,10 +63,10 @@ func loginResponse(c *gin.Context, code int, token string, expire time.Time, dat
   sessionStore := sessions.DefaultMany(c, restful.SESSION_COOKIE_KEY_TOKEN)
   sessionStore.Set("token", data)
   sessionStore.Save()
-  
+
   session := restful.NewApiRequest(c, nil)
   session.Response(code, serviceErrors.SUCCESS, data, nil)
-  
+
   return
 }
 
@@ -83,24 +84,32 @@ func generateVerifyCode(c *gin.Context, info auth.SignInInfo) (ret interface{}, 
   var options = store.GetOptions()
   options.MaxAge = 5 * 60
   store.Options(options)
-  
+
   store.Set("content", data)
   err := store.Save()
   if err != nil {
     logging.Warnf("failed to save session info[%s], %s", restful.SESSION_COOKIE_KEY_CODE, err)
     code = serviceErrors.INTERNAL_ERROR
   }
-  
+
   ret = data
   return
 }
 
 func InitSession() auth.AuthorizationHandler {
   gob.Register(VerificationInfo{})
-  
+
   authHandler := auth.NewBasicAuthHandler(authenticator, unauthorized, generateVerifyCode, loginResponse)
   if authHandler == nil {
     logging.Fatalf("failed to initialize authorization module")
   }
   return authHandler
+}
+
+func sessionUnauthorized(c *gin.Context) {
+  c.Status(http.StatusUnauthorized)
+}
+
+func sessionAuthorized(c *gin.Context, data interface{}) {
+  logging.Trace(data)
 }
