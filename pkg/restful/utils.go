@@ -12,7 +12,10 @@ func Version(c *gin.Context) {
   c.JSON(http.StatusOK, gin.H{
     "buildTime": pkg.BuildDate,
     "version":   pkg.Version,
-    "commit":    pkg.CommitHash})
+    "commit":    pkg.CommitHash,
+    "author":    pkg.Author,
+    "commitMsg": pkg.CommitMsg,
+  })
 }
 
 // GetToken 获取用户令牌
