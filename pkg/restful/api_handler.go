@@ -95,6 +95,15 @@ func (r *ApiRequest) ResponseCode(code int) {
   r.gin.JSON(http.StatusOK, &resp)
 }
 
+func (r *ApiRequest) ResponseData(code int, data interface{}) {
+    resp := Response{}
+    resp.Code = code
+    if data != nil {
+        resp.Data = data
+    }
+    r.gin.JSON(http.StatusOK, &resp)
+}
+
 func (r *ApiRequest) SuccessData(data interface{}) {
   resp := Response{}
   if data != nil {
