@@ -5,6 +5,7 @@ go 1.13
 require (
 	github.com/allegro/bigcache v1.2.1
 	github.com/apache/rocketmq-client-go v1.2.4
+	github.com/dgryski/go-farm v0.0.0-20200201041132-a6ae2369ad13
 	github.com/gin-contrib/cors v1.3.0
 	github.com/gin-gonic/gin v1.5.0
 	github.com/go-redis/redis/v7 v7.2.0

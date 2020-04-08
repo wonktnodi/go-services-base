@@ -19,9 +19,20 @@ func main() {
   logging.NewLogger(demoConfig.Settings.Server.RunMode)
   logging.SetLevel(demoConfig.Settings.Server.LogLevel)
 
+  //data := make([]byte, 8)
+  //binary.PutUvarint(data, 12)
+  //id := farm.Hash64(data)
+  //logging.Trace(id)
+  //data2 := make([]byte, 18)
+  //binary.PutUvarint(data2, id)
+  //dst := hex.EncodeToString(data2)
+  //logging.Trace(dst)
+
   modelSettings := demoConfig.Settings.Redis
   modelSettings.DB = 1
   cache.Init(&modelSettings)
+
+
 
   databases.InitMysql(&demoConfig.Settings.Database, true, true)
   restful.InitServices("backend")
